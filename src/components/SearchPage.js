@@ -1,19 +1,34 @@
 import React, { Component } from "react";
-import SearchBar from "./SearchBar";
-import "../BooksAPI";
-import SearchResult from "./SearchResult";
 import { search } from "../BooksAPI";
+import SearchBar from "./SearchBar";
+import SearchResult from "./SearchResult";
 
 class SearchPage extends Component {
-  state = { books: [] };
-  exitSearch = (event) => {
+  state = { books: [], errorMessage: "" };
+  exitSearch = () => {
     this.props.returnMain();
   };
 
   onSearchSubmit = async (term) => {
     const response = await search(term);
-    this.setState({ books: response });
+    if (response.error) {
+      this.setState({ errorMessage: response.error });
+    } else {
+      this.setState({ books: response, errorMessage: "" });
+    }
   };
+
+  renderResults() {
+    if (this.state.errorMessage) {
+      return (
+        <div className="search-books-results">
+          Error:{this.state.errorMessage}
+        </div>
+      );
+    } else {
+      return <SearchResult books={this.state.books} />;
+    }
+  }
 
   render() {
     return (
@@ -24,7 +39,7 @@ class SearchPage extends Component {
           </button>
           <SearchBar onSubmit={this.onSearchSubmit} />
         </div>
-        <SearchResult books={this.state.books} />
+        {this.renderResults()}
       </div>
     );
   }

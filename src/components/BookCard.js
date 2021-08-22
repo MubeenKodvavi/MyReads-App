@@ -12,7 +12,11 @@ export default class BookCard extends Component {
               style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url(${imageLinks.thumbnail})`,
+                backgroundImage: `url(${
+                  imageLinks
+                    ? imageLinks.thumbnail
+                    : "https://www.google.com/url?sa=i&url=http%3A%2F%2Fcontent.sciendo.com%2Fjournals%2Fpoljes%2F72%2F1%2Fpoljes.72.issue-1.xml&psig=AOvVaw2XzQcvEhA74uZ_X6ksPXOV&ust=1629707188065000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOCW9MOaxPICFQAAAAAdAAAAABAO"
+                })`,
               }}
             />
             <div className="book-shelf-changer">
