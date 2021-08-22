@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import "../BooksAPI";
+import SearchResult from "./SearchResult";
 import { search } from "../BooksAPI";
 
 class SearchPage extends Component {
@@ -11,7 +12,7 @@ class SearchPage extends Component {
 
   onSearchSubmit = async (term) => {
     const response = await search(term);
-    console.log(response);
+    this.setState({ books: response });
   };
 
   render() {
@@ -23,6 +24,7 @@ class SearchPage extends Component {
           </button>
           <SearchBar onSubmit={this.onSearchSubmit} />
         </div>
+        <SearchResult books={this.state.books} />
       </div>
     );
   }
